@@ -20,9 +20,9 @@ const port = 8080;
 app.use(cors());
 app.use(express.json());
 app.use(express.static("dist"));
-app.use("/path", (req, res) => {
-  res.json({ path: path.resolve() });
-});
+// app.use("/path", (req, res) => {
+//   res.json({ path: path.resolve() });
+// });
 
 //router
 app.use("/api/auth", auth);
