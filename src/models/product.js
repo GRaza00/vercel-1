@@ -6,6 +6,6 @@ const productSchema = new Schema({
   rating: { type: Number, min: [0, "more than 0"], max: [5, "less then 5"] },
 });
 
-const product = model("product", productSchema);
+const product = model("products", productSchema);
 
 export default product;
