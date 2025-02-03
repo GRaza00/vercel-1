@@ -13,10 +13,20 @@ const createProduct = async (req, res) => {
 
 //getProducts
 const getProducts = async (req, res) => {
-  const query = product.find();
+  const { pageno, limit } = req.query;
+
+  // .sort({ createdAt: -1 })
+  //     .skip((Number(pageNumber) - 1) * Number(limit))
+  //     .limit(Number(limit));
+
+  const query = product
+    .find()
+    .skip((pageno - 1) * limit)
+    .limit(limit);
+
   try {
     const doc = await query.exec();
-    res.status(201).json(doc);
+    res.status(200).json(doc);
   } catch (e) {
     res.status(400).json(e);
   }

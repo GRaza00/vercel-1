@@ -12,6 +12,7 @@ import client from "./routes/client.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authenticate from "./middleware/authenticate.js";
+import logData from "./middleware/logData.js";
 
 const app = express();
 
@@ -22,10 +23,12 @@ const port = 8080;
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(logData);
 
 //router
 app.use("/api/auth", auth);
-app.use("/api/admin", authenticate, admin);
+app.use("/api/admin", admin);
 app.use("/api/client", client);
 
 //server listen

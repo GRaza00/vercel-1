@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { URI } from "../containt.js";
+import { URI } from "./containt.js";
 
 async function connectDB() {
   try {

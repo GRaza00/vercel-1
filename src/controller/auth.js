@@ -1,4 +1,4 @@
-import { jwtSecretKey } from "../containt.js";
+import { jwtSecretKey } from "../utils/containt.js";
 import user from "../models/user.js";
 import jwt from "jsonwebtoken";
 import { verifyPassword, encPassword } from "../utils/password.js";
@@ -6,14 +6,15 @@ import { verifyPassword, encPassword } from "../utils/password.js";
 //login
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const userInfo = await user
+  const query = await user
     .findOne({ email: email.toLowerCase() })
     .select("password");
   try {
+    const userInfo = await query.exec();
     const hashPassword = userInfo.password;
     const userObjectId = userInfo.toObject();
     const isMatch = await verifyPassword(password, hashPassword);
-    console.log(isMatch);
+    console.log({ isMatch, userObjectId });
     if (isMatch) {
       const token = jwt.sign(userObjectId, jwtSecretKey, { expiresIn: "1d" });
       userInfo.token = token;
@@ -34,7 +35,7 @@ const login = async (req, res) => {
 //signUp
 const signUp = async (req, res) => {
   const { name, email, password } = req.body;
-  const salt = 10;
+  console.log(req.body);
   const hashPassword = await encPassword(password);
   const newUser = new user({ name, email, password: hashPassword });
   const resultObject = newUser.toObject();

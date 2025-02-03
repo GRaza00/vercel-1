@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { jwtSecretKey } from "../containt.js";
+import { jwtSecretKey } from "../utils/containt.js";
 
 const authenticate = async (req, res, next) => {
   const barerToken = req.headers.authorization;
